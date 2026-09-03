@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
+import { GooglePlayIcon } from "@/components/social-icons";
 import { projects } from "@/data/projects";
 import { siteConfig } from "@/data/site-config";
 
@@ -135,11 +136,24 @@ export function Projects() {
 
                 {/* Actions */}
                 <div className="flex flex-wrap items-center gap-3 pt-4">
+                  {flagship.playStoreUrl && (
+                    <a
+                      href={flagship.playStoreUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs transition-all shadow-sm group/btn"
+                    >
+                      <GooglePlayIcon className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>Ver na Google Play Store</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-zinc-500 group-hover/btn:translate-x-0.5 transition-transform" />
+                    </a>
+                  )}
+
                   <a
                     href="#contato"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs transition-all shadow-sm"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors border border-white/5"
                   >
-                    <span>Solicitar Orçamento para seu Projeto</span>
+                    <span>Quero um App Sob Medida</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
 
