@@ -196,5 +196,11 @@ Por ser uma aplicação **100% estática (`○ Static`)**, este projeto pode ser
 ---
 
 <div align="center">
-  <sub>© 2026 tamagolabs. Todos os direitos reservados. Feito com rigor técnico e foco em performance.</sub>
+  <sub>
+    © <span id="current-year"></span> tamagolabs. Todos os direitos reservados. Feito com rigor técnico e foco em performance.
+  </sub>
 </div>
+
+<script>
+  document.getElementById("current-year").textContent = new Date().getFullYear();
+</script>
