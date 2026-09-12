@@ -133,6 +133,7 @@ export default async function LocaleLayout({
 
   return (
     <html
+      data-scroll-behavior="smooth"
       lang={locale === "pt" ? "pt-BR" : "en-US"}
       className={`${geistSans.variable} ${geistMono.variable} scroll-smooth antialiased dark`}
     >
