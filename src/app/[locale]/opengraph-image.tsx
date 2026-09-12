@@ -1,14 +1,25 @@
 import { ImageResponse } from "next/og";
+import { isValidLocale, locales } from "@/i18n/config";
 
-export const alt =
-  "tamagolabs - Desenvolvimento de Software, APIs, Mobile e SaaS";
 export const size = {
   width: 1200,
   height: 630,
 };
 export const contentType = "image/png";
 
-export default async function Image() {
+export async function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const validLocale = isValidLocale(locale) ? locale : "pt";
+  const isPt = validLocale === "pt";
+
   return new ImageResponse(
     <div
       style={{
@@ -79,7 +90,9 @@ export default async function Image() {
             maxWidth: "1000px",
           }}
         >
-          Engenharia de Software de Alta Performance
+          {isPt
+            ? "Engenharia de Software de Alta Performance"
+            : "High-Performance Software Engineering"}
         </div>
         <div
           style={{
@@ -89,8 +102,9 @@ export default async function Image() {
             lineHeight: 1.4,
           }}
         >
-          APIs Escaláveis • Apps Mobile com React Native • SaaS sob medida •
-          100% Web Vitals
+          {isPt
+            ? "APIs Escaláveis • Apps Mobile com React Native • SaaS sob medida • 100% Web Vitals"
+            : "Scalable APIs • React Native Mobile Apps • Custom SaaS • 100% Web Vitals"}
         </div>
       </div>
 
@@ -106,7 +120,11 @@ export default async function Image() {
           color: "#71717a",
         }}
       >
-        <div>Desenvolvedor Full Stack Solo Sênior</div>
+        <div>
+          {isPt
+            ? "Desenvolvedor Full Stack Solo Sênior"
+            : "Senior Solo Full Stack Developer"}
+        </div>
         <div style={{ color: "#34d399", fontWeight: 700 }}>tamagolabs.com</div>
       </div>
     </div>,

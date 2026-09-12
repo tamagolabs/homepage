@@ -30,8 +30,6 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-export const metadataBase = new URL(siteConfig.url);
-
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -91,20 +89,11 @@ export async function generateMetadata({
       title: dict.meta.ogTitle,
       description: dict.meta.ogDescription,
       siteName: siteConfig.name,
-      images: [
-        {
-          url: "/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: dict.meta.ogImageAlt,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.meta.twitterTitle,
       description: dict.meta.description,
-      images: ["/og-image.png"],
     },
     icons: {
       icon: [
