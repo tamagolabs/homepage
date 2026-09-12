@@ -5,9 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { GithubIcon, LinkedinIcon } from "@/components/social-icons";
 import { siteConfig } from "@/data/site-config";
+import { useI18n } from "@/i18n/context";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { dict, locale } = useI18n();
 
   return (
     <footer className="border-t border-white/10 bg-zinc-950 py-16 text-zinc-400 text-sm">
@@ -16,9 +18,9 @@ export function Footer() {
           {/* Brand Col */}
           <div className="md:col-span-2 space-y-4">
             <Link
-              href="/"
+              href={`/${locale}`}
               className="flex items-center gap-2.5 group w-fit"
-              aria-label="tamagolabs - Início"
+              aria-label={dict.nav.brandAria}
             >
               <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
                 <Image
@@ -34,23 +36,21 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-xs text-zinc-400 max-w-sm leading-relaxed">
-              {siteConfig.tagline}. Estúdio de engenharia de software focado em
-              APIs de alta escalabilidade, apps mobile com React Native, landing
-              pages e SaaS completos.
+              {dict.footer.tagline}. {dict.footer.description}
             </p>
             <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
-              Desenvolvido por Dev Full Stack Solo Sênior
+              {dict.footer.developerCredit}
             </div>
           </div>
 
           {/* Navigation links */}
           <div>
             <span className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-300 block mb-3">
-              Navegação
+              {dict.footer.navHeader}
             </span>
             <ul className="space-y-2 text-xs">
-              {siteConfig.navigation.map((item) => (
+              {dict.nav.links.map((item) => (
                 <li key={item.name}>
                   <a
                     href={item.href}
@@ -66,7 +66,7 @@ export function Footer() {
           {/* External Links & Portfolio */}
           <div>
             <span className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-300 block mb-3">
-              Links & Conexões
+              {dict.footer.linksHeader}
             </span>
             <ul className="space-y-2 text-xs">
               <li>
@@ -76,7 +76,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors inline-flex items-center gap-1 text-emerald-400 font-semibold"
                 >
-                  Portfólio Pessoal
+                  {dict.footer.portfolio}
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
@@ -88,7 +88,7 @@ export function Footer() {
                   className="hover:text-white transition-colors inline-flex items-center gap-1.5"
                 >
                   <GithubIcon className="w-3.5 h-3.5" />
-                  GitHub Oficial
+                  {dict.footer.github}
                 </a>
               </li>
               <li>
@@ -99,7 +99,7 @@ export function Footer() {
                   className="hover:text-white transition-colors inline-flex items-center gap-1.5"
                 >
                   <LinkedinIcon className="w-3.5 h-3.5" />
-                  LinkedIn
+                  {dict.footer.linkedin}
                 </a>
               </li>
             </ul>
@@ -108,12 +108,9 @@ export function Footer() {
 
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-400 font-mono">
           <div>
-            © {currentYear} {siteConfig.legalName}. Todos os direitos
-            reservados.
+            © {currentYear} {siteConfig.legalName}. {dict.footer.rightsReserved}
           </div>
-          <div className="flex items-center gap-1">
-            Construído com Next.js, Bun, Tailwind CSS &amp; Motion
-          </div>
+          <div className="flex items-center gap-1">{dict.footer.builtWith}</div>
         </div>
       </div>
     </footer>

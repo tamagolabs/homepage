@@ -11,8 +11,35 @@ import {
 import { motion } from "motion/react";
 import Image from "next/image";
 import { siteConfig } from "@/data/site-config";
+import { useI18n } from "@/i18n/context";
+
+const iconMap = [Zap, Smartphone, Code2, ShieldCheck];
+const colorMap = [
+  {
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20",
+    text: "text-emerald-400",
+  },
+  {
+    bg: "bg-cyan-500/10",
+    border: "border-cyan-500/20",
+    text: "text-cyan-400",
+  },
+  {
+    bg: "bg-teal-500/10",
+    border: "border-teal-500/20",
+    text: "text-teal-400",
+  },
+  {
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/20",
+    text: "text-amber-400",
+  },
+];
 
 export function Hero() {
+  const { dict } = useI18n();
+
   return (
     <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
       {/* Background Gradients */}
@@ -48,7 +75,7 @@ export function Hero() {
             </div>
           </div>
           <span className="font-mono text-[11px] font-medium tracking-wide text-zinc-300">
-            ESTÚDIO DE SOFTWARE • ENGENHARIA FULL STACK SÊNIOR
+            {dict.hero.badge}
           </span>
         </motion.div>
 
@@ -59,11 +86,11 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.1]"
         >
-          Engenharia de software{" "}
+          {dict.hero.titlePrefix}{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-            de alta performance
+            {dict.hero.titleHighlight}
           </span>{" "}
-          sem burocracia.
+          {dict.hero.titleSuffix}
         </motion.h1>
 
         {/* Value Proposition Description */}
@@ -73,17 +100,21 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-6 text-lg sm:text-xl text-zinc-400 max-w-2xl font-normal leading-relaxed"
         >
-          Construção acelerada e refinada de{" "}
-          <strong className="text-zinc-200">APIs escaláveis</strong>,{" "}
+          {dict.hero.description.p1}{" "}
+          <strong className="text-zinc-200">{dict.hero.description.api}</strong>
+          ,{" "}
           <strong className="text-zinc-200">
-            apps mobile com React Native
+            {dict.hero.description.mobile}
           </strong>
           ,{" "}
           <strong className="text-zinc-200">
-            landing pages nota 100 em Web Vitals
+            {dict.hero.description.landing}
           </strong>{" "}
-          e <strong className="text-zinc-200">produtos SaaS completos</strong>.
-          Você fala e negocia diretamente com quem constrói o código.
+          e{" "}
+          <strong className="text-zinc-200">
+            {dict.hero.description.saas}
+          </strong>
+          . {dict.hero.description.p2}
         </motion.p>
 
         {/* Call to Actions */}
@@ -97,7 +128,7 @@ export function Hero() {
             href="#contato"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-sm transition-all duration-200 shadow-md shadow-emerald-500/20 active:scale-98 group"
           >
-            Falar sobre um projeto
+            {dict.hero.ctaPrimary}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
 
@@ -105,7 +136,7 @@ export function Hero() {
             href="#projetos"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 text-zinc-200 font-medium text-sm transition-all duration-200 backdrop-blur-sm"
           >
-            Explorar Projetos & Apps
+            {dict.hero.ctaSecondary}
           </a>
 
           <a
@@ -114,7 +145,7 @@ export function Hero() {
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-3.5 text-zinc-400 hover:text-white text-sm font-medium transition-colors"
           >
-            Portfólio Pessoal
+            {dict.hero.ctaPortfolio}
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </motion.div>
@@ -126,61 +157,25 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-4xl text-left"
         >
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
-              <Zap className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="text-sm font-bold text-white font-mono">
-                100% Web Vitals
+          {dict.hero.pillars.map((pillar, i) => {
+            const Icon = iconMap[i] || Zap;
+            const colors = colorMap[i] || colorMap[0];
+            return (
+              <div key={pillar.title} className="flex items-start gap-3">
+                <div
+                  className={`p-2 rounded-lg ${colors.bg} border ${colors.border} ${colors.text} shrink-0`}
+                >
+                  <Icon className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white font-mono">
+                    {pillar.title}
+                  </div>
+                  <div className="text-xs text-zinc-400">{pillar.desc}</div>
+                </div>
               </div>
-              <div className="text-xs text-zinc-400">
-                Páginas ultrarrápidas &lt; 1.0s
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">
-              <Smartphone className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="text-sm font-bold text-white font-mono">
-                React Native & Expo
-              </div>
-              <div className="text-xs text-zinc-400">
-                iOS & Android em código unificado
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-teal-500/10 border border-teal-500/20 text-teal-400 shrink-0">
-              <Code2 className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="text-sm font-bold text-white font-mono">
-                APIs & Microserviços
-              </div>
-              <div className="text-xs text-zinc-400">
-                Baixa latência com Bun & Node
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="text-sm font-bold text-white font-mono">
-                Engenheiro Sênior
-              </div>
-              <div className="text-xs text-zinc-400">
-                Comunicação 1-a-1 e entrega ágil
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

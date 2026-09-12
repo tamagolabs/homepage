@@ -1,21 +1,28 @@
 import { siteConfig } from "@/data/site-config";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries/pt";
 
-export function JsonLd() {
+interface JsonLdProps {
+  locale: Locale;
+  dict: Dictionary;
+}
+
+export function JsonLd({ locale, dict }: JsonLdProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": `${siteConfig.url}/#organization`,
+        "@id": `${siteConfig.url}/${locale}#organization`,
         name: siteConfig.name,
         legalName: siteConfig.legalName,
-        url: siteConfig.url,
+        url: `${siteConfig.url}/${locale}`,
         logo: `${siteConfig.url}/favicon.ico`,
-        description: siteConfig.description,
+        description: dict.meta.description,
         founder: {
           "@type": "Person",
           name: siteConfig.founder.name,
-          jobTitle: siteConfig.founder.role,
+          jobTitle: dict.founder.role,
           url: siteConfig.founder.portfolioUrl,
           sameAs: [
             siteConfig.founder.githubUrl,
@@ -33,30 +40,23 @@ export function JsonLd() {
       },
       {
         "@type": "WebSite",
-        "@id": `${siteConfig.url}/#website`,
-        url: siteConfig.url,
+        "@id": `${siteConfig.url}/${locale}#website`,
+        url: `${siteConfig.url}/${locale}`,
         name: siteConfig.name,
-        description: siteConfig.description,
+        description: dict.meta.description,
         publisher: {
-          "@id": `${siteConfig.url}/#organization`,
+          "@id": `${siteConfig.url}/${locale}#organization`,
         },
       },
       {
         "@type": "ProfessionalService",
-        "@id": `${siteConfig.url}/#service`,
-        name: `${siteConfig.name} - Engenharia de Software`,
-        url: siteConfig.url,
-        description:
-          "Desenvolvimento sob medida de APIs de alta performance, aplicativos móveis com React Native, landing pages nota 100 no Google Web Vitals e plataformas SaaS completas.",
-        serviceType: [
-          "Desenvolvimento de Software",
-          "Desenvolvimento de APIs",
-          "Desenvolvimento de Apps Mobile React Native",
-          "Desenvolvimento de SaaS",
-          "Landing Pages de Alta Conversão",
-        ],
+        "@id": `${siteConfig.url}/${locale}#service`,
+        name: `${siteConfig.name} - ${locale === "en" ? "Software Engineering" : "Engenharia de Software"}`,
+        url: `${siteConfig.url}/${locale}`,
+        description: dict.jsonLd.serviceDescription,
+        serviceType: dict.jsonLd.serviceTypes,
         provider: {
-          "@id": `${siteConfig.url}/#organization`,
+          "@id": `${siteConfig.url}/${locale}#organization`,
         },
         areaServed: "Global",
       },

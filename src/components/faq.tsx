@@ -3,41 +3,10 @@
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-const faqs: FaqItem[] = [
-  {
-    question: "Quem é o dono do código-fonte e da propriedade intelectual?",
-    answer:
-      "100% seu. Ao finalizar as etapas do projeto, todo o repositório no GitHub/GitLab, documentação e infraestrutura são transferidos integralmente para sua titularidade. Zero lock-in de agência.",
-  },
-  {
-    question: "Qual é o tempo médio para colocar um projeto no ar?",
-    answer:
-      "Landing pages de alta conversão costumam ser entregues e publicadas entre 5 a 10 dias úteis. MVPs de SaaS ou apps mobile com React Native geralmente levam de 3 a 6 semanas, dependendo da complexidade das integrações.",
-  },
-  {
-    question: "Como funciona a contratação e o pagamento?",
-    answer:
-      "Trabalhamos com modelo de escopo fechado (com entregas e marcos bem definidos com entrada e parcelamento) ou modelo de alocação por sprint/mês para projetos contínuos. Contrato formal e nota fiscal inclusos.",
-  },
-  {
-    question: "Vocês realizam a publicação do aplicativo na Apple e Google?",
-    answer:
-      "Sim! Cuidamos de todo o processo de build através do Expo EAS, geração dos certificados, configuração das páginas de loja (ASO) e submissão tanto para a Apple App Store quanto para a Google Play Store.",
-  },
-  {
-    question: "Como é o suporte após o lançamento?",
-    answer:
-      "Todos os projetos contam com garantia de 30 dias para correções de eventuais bugs sem custo adicional. Também oferecemos planos mensais opcionais de sustentação e evolução contínua da sua plataforma.",
-  },
-];
+import { useI18n } from "@/i18n/context";
 
 export function Faq() {
+  const { dict } = useI18n();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
@@ -50,19 +19,18 @@ export function Faq() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-emerald-400 mb-3">
             <HelpCircle className="w-3.5 h-3.5" />
-            PERGUNTAS FREQUENTES
+            {dict.faq.badge}
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Tudo o que você precisa saber antes de iniciarmos
+            {dict.faq.title}
           </h2>
           <p className="mt-3 text-sm sm:text-base text-zinc-400">
-            Transparência total desde o primeiro dia. Se sua dúvida não estiver
-            aqui, é só nos chamar no WhatsApp.
+            {dict.faq.subtitle}
           </p>
         </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, index) => {
+          {dict.faq.items.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div

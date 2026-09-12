@@ -9,7 +9,7 @@ import { Services } from "@/components/services";
 import { SoloAdvantage } from "@/components/solo-advantage";
 import { TechStack } from "@/components/tech-stack";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Navbar />

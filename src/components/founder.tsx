@@ -5,8 +5,11 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { GithubIcon, LinkedinIcon } from "@/components/social-icons";
 import { siteConfig } from "@/data/site-config";
+import { useI18n } from "@/i18n/context";
 
 export function Founder() {
+  const { dict } = useI18n();
+
   return (
     <section
       id="fundador"
@@ -29,7 +32,7 @@ export function Founder() {
               <div className="w-full h-full rounded-[22px] overflow-hidden relative bg-zinc-950">
                 <Image
                   src={siteConfig.founder.avatarUrl}
-                  alt={siteConfig.founder.name}
+                  alt={dict.founder.name}
                   width={192}
                   height={192}
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500"
@@ -38,7 +41,7 @@ export function Founder() {
               </div>
             </div>
             <div className="absolute -bottom-2 -right-2 px-3 py-1 rounded-full bg-emerald-500 text-zinc-950 text-[10px] font-bold font-mono shadow-lg shadow-emerald-500/30 border border-zinc-950">
-              ENG. DE SOFTWARE
+              {dict.founder.roleBadge}
             </div>
           </div>
 
@@ -46,21 +49,18 @@ export function Founder() {
           <div className="flex-1 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              QUEM CONSTRÓI SEU PROJETO
+              {dict.founder.badge}
             </div>
 
             <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              {siteConfig.founder.name}
+              {dict.founder.name}
             </h3>
             <p className="text-sm font-medium text-emerald-400 font-mono mt-0.5 mb-4">
-              {siteConfig.founder.role}
+              {dict.founder.role}
             </p>
 
             <p className="text-sm text-zinc-300 leading-relaxed mb-6 max-w-2xl">
-              {siteConfig.founder.bio} Na tamagolabs, você não lida com
-              intermediários nem com rotatividade de funcionários de agência. Eu
-              pessoalmente oriento a melhor solução técnica e executo do início
-              ao fim com transparência radical.
+              {dict.founder.bio} {dict.founder.statement}
             </p>
 
             {/* Social & Portfolio links */}
@@ -71,7 +71,7 @@ export function Founder() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-all shadow-sm"
               >
-                Portfólio Pessoal Completo
+                {dict.founder.ctaPortfolio}
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
 
@@ -82,7 +82,7 @@ export function Founder() {
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors border border-white/5"
               >
                 <GithubIcon className="w-3.5 h-3.5" />
-                GitHub
+                {dict.founder.ctaGithub}
               </a>
 
               <a
@@ -92,7 +92,7 @@ export function Founder() {
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors border border-white/5"
               >
                 <LinkedinIcon className="w-3.5 h-3.5" />
-                LinkedIn
+                {dict.founder.ctaLinkedin}
               </a>
             </div>
           </div>
@@ -108,32 +108,31 @@ export function Founder() {
         >
           <div className="flex-1 space-y-3 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400">
-              O CONCEITO DA MARCA
+              {dict.founder.brandCard.badge}
             </div>
             <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              Por que &quot;tamagolabs&quot;?
+              {dict.founder.brandCard.title}
             </h3>
             <p className="text-sm text-zinc-400 leading-relaxed max-w-xl">
-              Em japonês, <strong className="text-zinc-200">Tamago (卵)</strong>{" "}
-              significa ovo. Para nós, representa o processo de{" "}
+              {dict.founder.brandCard.description1}{" "}
+              <strong className="text-zinc-200">
+                {dict.founder.brandCard.tamagoWord}
+              </strong>{" "}
+              {dict.founder.brandCard.description2}{" "}
               <strong className="text-emerald-400">
-                incubação de produtos digitais
+                {dict.founder.brandCard.incubationHighlight}
               </strong>
-              : acolhemos sua ideia ainda embrionária, estruturamos cada linha
-              de arquitetura com precisão e cuidado até ela quebrar a casca e
-              eclodir no mercado como um software robusto, escalável e de alta
-              conversão.
+              {dict.founder.brandCard.description3}
             </p>
             <div className="flex flex-wrap items-center gap-2 pt-2 justify-center md:justify-start">
-              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300 border border-white/5">
-                Ideação &amp; Incubação
-              </span>
-              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300 border border-white/5">
-                Engenharia Sólida
-              </span>
-              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300 border border-white/5">
-                Eclosão &amp; Escala
-              </span>
+              {dict.founder.brandCard.pills.map((pill) => (
+                <span
+                  key={pill}
+                  className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300 border border-white/5"
+                >
+                  {pill}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -143,7 +142,7 @@ export function Founder() {
               <div className="absolute inset-0 bg-emerald-500/15 rounded-full blur-2xl group-hover:bg-emerald-500/25 transition-all duration-500" />
               <Image
                 src="/images/tamago-mascot-trimmed.png"
-                alt="Mascote tamagolabs - Gatinho no ovo de tecnologia"
+                alt={dict.founder.brandCard.altMascot}
                 width={240}
                 height={220}
                 className="w-full h-full object-contain relative z-10 group-hover:scale-105 transition-transform duration-500 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"

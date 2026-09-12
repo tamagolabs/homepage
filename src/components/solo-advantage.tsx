@@ -2,9 +2,11 @@
 
 import { ArrowRight, Check, Shield, X } from "lucide-react";
 import { motion } from "motion/react";
-import { soloAdvantages } from "@/data/solo-advantages";
+import { useI18n } from "@/i18n/context";
 
 export function SoloAdvantage() {
+  const { dict } = useI18n();
+
   return (
     <section
       id="diferencial"
@@ -13,20 +15,18 @@ export function SoloAdvantage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-emerald-400 mb-3">
-            O MODELO SOLO FOUNDER
+            {dict.soloAdvantage.badge}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            Por que contratar um Dev Solo Sênior em vez de uma Agência?
+            {dict.soloAdvantage.title}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-zinc-400">
-            Elimine as camadas burocráticas de agências convencionais. Trabalhe
-            lado a lado com quem tem a visão holística do produto e o rigor
-            técnico para executar.
+            {dict.soloAdvantage.subtitle}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {soloAdvantages.map((item, idx) => (
+          {dict.soloAdvantage.items.map((item, idx) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 15 }}
@@ -53,7 +53,7 @@ export function SoloAdvantage() {
                     </div>
                     <div className="text-xs text-zinc-300">
                       <span className="font-semibold text-red-300 block mb-0.5 font-mono uppercase tracking-wider text-[10px]">
-                        Agências Tradicionais:
+                        {dict.soloAdvantage.agencyLabel}
                       </span>
                       {item.agencyWay}
                     </div>
@@ -66,7 +66,7 @@ export function SoloAdvantage() {
                     </div>
                     <div className="text-xs text-zinc-200">
                       <span className="font-semibold text-emerald-400 block mb-0.5 font-mono uppercase tracking-wider text-[10px]">
-                        Com a tamagolabs:
+                        {dict.soloAdvantage.tamagoLabel}
                       </span>
                       {item.tamagoWay}
                     </div>
@@ -83,7 +83,8 @@ export function SoloAdvantage() {
                   href="#contato"
                   className="text-xs text-zinc-400 hover:text-white font-medium inline-flex items-center gap-1 transition-colors"
                 >
-                  Saiba mais <ArrowRight className="w-3 h-3" />
+                  {dict.soloAdvantage.learnMore}{" "}
+                  <ArrowRight className="w-3 h-3" />
                 </a>
               </div>
             </motion.div>

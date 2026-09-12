@@ -9,7 +9,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { services } from "@/data/services";
+import { useI18n } from "@/i18n/context";
 
 const iconMap = {
   api: Server,
@@ -19,6 +19,8 @@ const iconMap = {
 };
 
 export function Services() {
+  const { dict } = useI18n();
+
   return (
     <section
       id="servicos"
@@ -28,21 +30,22 @@ export function Services() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-emerald-400 mb-3">
-            O QUE FAZEMOS
+            {dict.services.badge}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            Especialidades construídas com maestria técnica
+            {dict.services.title}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-zinc-400">
-            Foco cirúrgico em quatro áreas onde um desenvolvedor solo experiente
-            supera equipes inteiras em agilidade, custo e qualidade de entrega.
+            {dict.services.subtitle}
           </p>
         </div>
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service, index) => {
+          {dict.services.items.map((service, index) => {
             const Icon = iconMap[service.icon];
+            const isHighlighted =
+              "highlight" in service && Boolean(service.highlight);
             return (
               <motion.article
                 key={service.id}
@@ -51,7 +54,7 @@ export function Services() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className={`relative group rounded-2xl bg-zinc-900/50 border ${
-                  service.highlight
+                  isHighlighted
                     ? "border-emerald-500/30 shadow-lg shadow-emerald-500/5"
                     : "border-white/10"
                 } p-6 sm:p-8 hover:border-emerald-400/50 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col justify-between`}
@@ -78,7 +81,7 @@ export function Services() {
 
                   <div className="space-y-2 mb-6">
                     <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block mb-2 font-mono">
-                      O que está incluso:
+                      {dict.services.includedLabel}
                     </span>
                     {service.deliverables.map((item) => (
                       <div
@@ -108,7 +111,7 @@ export function Services() {
                     href="#contato"
                     className="inline-flex items-center gap-1 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group-hover:translate-x-1 duration-200"
                   >
-                    Cotar {service.id.toUpperCase()}
+                    {dict.services.quoteLabel} {service.id.toUpperCase()}
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
                 </div>

@@ -13,11 +13,12 @@ import {
 import { motion } from "motion/react";
 import Image from "next/image";
 import { GooglePlayIcon } from "@/components/social-icons";
-import { projects } from "@/data/projects";
 import { siteConfig } from "@/data/site-config";
+import { useI18n } from "@/i18n/context";
 
 export function Projects() {
-  const flagship = projects[0];
+  const { dict } = useI18n();
+  const flagship = dict.projects.flagship;
 
   return (
     <section
@@ -29,15 +30,13 @@ export function Projects() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-emerald-400 mb-3">
-              PRODUTOS & CASES DE SUCESSO
+              {dict.projects.badge}
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-              Software real em produção
+              {dict.projects.title}
             </h2>
             <p className="mt-3 text-base text-zinc-400 max-w-2xl">
-              Conheça as soluções desenvolvidas pela tamagolabs. Foco em código
-              limpo, arquiteturas locais de altíssima performance e inteligência
-              artificial aplicada.
+              {dict.projects.subtitle}
             </p>
           </div>
 
@@ -49,7 +48,7 @@ export function Projects() {
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-sm font-medium text-zinc-200 hover:text-white transition-all duration-200 shrink-0 self-start md:self-auto"
           >
             <UserCheck className="w-4 h-4 text-emerald-400" />
-            Portfólio Pessoal do Engenheiro
+            {dict.projects.founderPortfolioLink}
             <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
           </a>
         </div>
@@ -144,7 +143,7 @@ export function Projects() {
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-bold text-xs transition-all shadow-sm group/btn"
                     >
                       <GooglePlayIcon className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>Ver na Google Play Store</span>
+                      <span>{flagship.playStoreLabel}</span>
                       <ExternalLink className="w-3.5 h-3.5 text-zinc-500 group-hover/btn:translate-x-0.5 transition-transform" />
                     </a>
                   )}
@@ -153,13 +152,13 @@ export function Projects() {
                     href="#contato"
                     className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors border border-white/5"
                   >
-                    <span>Quero um App Sob Medida</span>
+                    <span>{flagship.customAppCta}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </a>
 
                   <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-950/80 border border-white/5 text-[11px] font-mono text-zinc-400">
                     <Lock className="w-3.5 h-3.5 text-zinc-500" />
-                    <span>Software Proprietário</span>
+                    <span>{flagship.proprietarySoftware}</span>
                   </div>
                 </div>
               </div>
@@ -168,7 +167,7 @@ export function Projects() {
               <div className="lg:col-span-5 rounded-2xl bg-zinc-950/70 border border-white/10 p-6 space-y-4">
                 <div className="flex items-center gap-2 text-xs font-mono text-zinc-300 font-semibold uppercase tracking-wider pb-1 border-b border-white/5">
                   <Layers className="w-3.5 h-3.5 text-emerald-400" />
-                  Destaques de Engenharia &amp; Recursos
+                  {flagship.highlightsTitle}
                 </div>
 
                 <div className="space-y-3">
@@ -184,9 +183,9 @@ export function Projects() {
                 </div>
 
                 <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-                  <span>Arquitetura: Local-First</span>
+                  <span>{flagship.architectureLabel}</span>
                   <span className="text-emerald-400 font-semibold">
-                    100% Offline Ready
+                    {flagship.offlineReadyLabel}
                   </span>
                 </div>
               </div>
@@ -199,16 +198,13 @@ export function Projects() {
           <div className="space-y-1.5 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
               <Zap className="w-3.5 h-3.5" />
-              DESENVOLVIMENTO SOB MEDIDA PARA A SUA EMPRESA
+              {dict.projects.customBanner.badge}
             </div>
             <h4 className="text-lg sm:text-xl font-bold text-white">
-              Precisa de um App Mobile, SaaS, API ou Landing Page?
+              {dict.projects.customBanner.title}
             </h4>
             <p className="text-xs sm:text-sm text-zinc-400 max-w-2xl">
-              O GymUp é a demonstração prática do padrão de código e acabamento
-              da tamagolabs. Para conhecer todo o histórico de sistemas e
-              empresas atendidas pelo Bruno Fukumori ao longo de mais de 10
-              anos, acesse o portfólio individual.
+              {dict.projects.customBanner.description}
             </p>
           </div>
 
@@ -217,7 +213,7 @@ export function Projects() {
               href="#contato"
               className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs transition-all shadow-md shadow-emerald-500/20"
             >
-              Solicitar Orçamento
+              {dict.projects.customBanner.quoteBtn}
             </a>
             <a
               href={siteConfig.founder.portfolioUrl}
@@ -225,7 +221,7 @@ export function Projects() {
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors border border-white/5 inline-flex items-center gap-1.5"
             >
-              Ver Portfólio do Dev
+              {dict.projects.customBanner.portfolioBtn}
               <ExternalLink className="w-3 h-3 text-zinc-400" />
             </a>
           </div>

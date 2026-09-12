@@ -5,11 +5,14 @@ import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { siteConfig } from "@/data/site-config";
+import { useI18n } from "@/i18n/context";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { dict, locale } = useI18n();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,9 +33,9 @@ export function Navbar() {
       >
         {/* Brand Logo */}
         <Link
-          href="/"
+          href={`/${locale}`}
           className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded-full"
-          aria-label="tamagolabs - Ir para o início"
+          aria-label={dict.nav.brandAria}
         >
           <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center p-1 group-hover:scale-105 group-hover:border-emerald-400/40 transition-all duration-300">
             <Image
@@ -52,9 +55,9 @@ export function Navbar() {
         {/* Desktop Navigation Links */}
         <nav
           className="hidden md:flex items-center gap-1 bg-zinc-950/40 p-1 rounded-full border border-white/5"
-          aria-label="Navegação principal"
+          aria-label={dict.nav.navigationAria}
         >
-          {siteConfig.navigation.map((item) => (
+          {dict.nav.links.map((item) => (
             <a
               key={item.name}
               href={item.href}
@@ -65,41 +68,53 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Actions & Status Badge */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        {/* Actions & Status Badge & Language Switcher */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* Language Switcher - Desktop & Small tablet */}
+          <div className="hidden sm:block">
+            <LanguageSwitcher variant="desktop" />
+          </div>
+
           {/* Subtle Live Availability indicator */}
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
+          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
             </span>
-            <span>Disponível</span>
+            <span>{dict.nav.available}</span>
           </div>
 
           {/* Sleek CTA Button */}
           <a
             href="#contato"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold tracking-tight transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-emerald-500/30 active:scale-95 group"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold tracking-tight transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-emerald-500/30 active:scale-95 group"
           >
-            <span>Iniciar Projeto</span>
+            <span>{dict.nav.startProject}</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
-        </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-colors"
-          aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
-          aria-expanded={mobileMenuOpen}
-        >
-          {mobileMenuOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
-        </button>
+          {/* Mobile Language Switcher (Compact icon on header for mobile) */}
+          <div className="sm:hidden">
+            <LanguageSwitcher variant="desktop" />
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-colors"
+            aria-label={
+              mobileMenuOpen ? dict.nav.menuCloseAria : dict.nav.menuOpenAria
+            }
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown Card */}
@@ -118,12 +133,18 @@ export function Navbar() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
                 </span>
-                <span>Disponível para novos projetos</span>
+                <span>{dict.nav.availableMobile}</span>
               </div>
             </div>
 
+            {/* Mobile Language Switcher Row */}
+            <LanguageSwitcher
+              variant="mobile"
+              onSelect={() => setMobileMenuOpen(false)}
+            />
+
             <nav className="flex flex-col space-y-1">
-              {siteConfig.navigation.map((item) => (
+              {dict.nav.links.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
@@ -143,7 +164,7 @@ export function Navbar() {
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-xs transition-all active:scale-98"
               >
                 <Sparkles className="w-3.5 h-3.5" />
-                Iniciar Projeto com Engenheiro
+                {dict.nav.startProjectMobile}
               </a>
             </div>
           </motion.div>

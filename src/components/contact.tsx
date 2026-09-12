@@ -12,25 +12,16 @@ import {
   Sparkles,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { siteConfig } from "@/data/site-config";
-
-const projectTypes = [
-  "App Mobile (React Native)",
-  "Produto SaaS Completo",
-  "APIs & Backend Escalável",
-  "Landing Page de Conversão",
-  "Consultoria Full Stack",
-];
-
-const budgetRanges = [
-  "R$ 5.000 – R$ 15.000",
-  "R$ 15.000 – R$ 30.000",
-  "R$ 30.000 – R$ 50.000+",
-  "Ainda avaliando / Em planejamento",
-];
+import { useI18n } from "@/i18n/context";
 
 export function Contact() {
+  const { dict, locale } = useI18n();
+
+  const projectTypes = dict.contact.form.projectTypes;
+  const budgetRanges = dict.contact.form.budgetRanges;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -38,6 +29,15 @@ export function Contact() {
     budget: budgetRanges[0],
     message: "",
   });
+
+  // When locale changes, keep projectType and budget aligned
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      projectType: projectTypes[0],
+      budget: budgetRanges[0],
+    }));
+  }, [projectTypes, budgetRanges]);
 
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -74,7 +74,7 @@ export function Contact() {
       payload.append("message", formData.message.trim());
       payload.append(
         "subject",
-        `[tamagolabs] Novo Contato: ${formData.projectType} por ${formData.name}`,
+        `[tamagolabs - ${locale.toUpperCase()}] New Contact: ${formData.projectType} by ${formData.name}`,
       );
 
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -86,14 +86,12 @@ export function Contact() {
 
       if (!res.ok || !result.success) {
         throw new Error(
-          result.message || "Erro ao despachar formulário. Tente via WhatsApp!",
+          result.message || dict.contact.form.feedbackErrorDefault,
         );
       }
 
       setStatus("success");
-      setFeedbackMessage(
-        "Mensagem enviada com sucesso! Entrarei em contato em até 24 horas.",
-      );
+      setFeedbackMessage(dict.contact.form.feedbackSuccess);
       setFormData({
         name: "",
         email: "",
@@ -106,39 +104,60 @@ export function Contact() {
       setFeedbackMessage(
         err instanceof Error
           ? err.message
-          : "Erro ao enviar. Por favor, tente via WhatsApp.",
+          : dict.contact.form.feedbackErrorDefault,
       );
     }
   };
 
-  // Link direto do WhatsApp para conversa rápida (funciona sem precisar preencher o form)
+  // Direct WhatsApp link for quick chat
   const getDirectWhatsAppUrl = () => {
-    const phone = siteConfig.contact.whatsappNumber || "5511999999999";
+    const phone = siteConfig.contact.whatsappNumber || "5511996227088";
     const name = formData.name.trim();
 
     if (name) {
-      const text = `Olá Bruno! Meu nome é ${name}. Vim pelo site da tamagolabs e gostaria de conversar sobre um projeto de ${formData.projectType}.`;
+      const text = dict.contact.form.directWhatsappWithName
+        .replace("{name}", name)
+        .replace("{projectType}", formData.projectType);
       return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
     }
 
-    const text =
-      "Olá Bruno! Vim pelo site da tamagolabs e gostaria de conversar sobre um projeto de software.";
-    return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(dict.contact.form.directWhatsappPrefix)}`;
   };
 
-  // Envio opcional dos dados completos do formulário direto para o WhatsApp
+  // Optional form forwarding to WhatsApp
   const handleSendFormViaWhatsApp = () => {
-    const phone = siteConfig.contact.whatsappNumber || "5511999999999";
-    const lines = [
-      "Olá Bruno! Vim pelo site da tamagolabs e gostaria de um orçamento:",
-    ];
+    const phone = siteConfig.contact.whatsappNumber || "5511996227088";
+    const lines = [dict.contact.form.formWhatsappGreeting];
 
-    if (formData.name.trim()) lines.push(`• Nome: ${formData.name.trim()}`);
-    if (formData.email.trim()) lines.push(`• E-mail: ${formData.email.trim()}`);
-    lines.push(`• Tipo de Projeto: ${formData.projectType}`);
-    if (formData.budget) lines.push(`• Orçamento Estimado: ${formData.budget}`);
+    if (formData.name.trim())
+      lines.push(
+        locale === "en"
+          ? `• Name: ${formData.name.trim()}`
+          : `• Nome: ${formData.name.trim()}`,
+      );
+    if (formData.email.trim())
+      lines.push(
+        locale === "en"
+          ? `• Email: ${formData.email.trim()}`
+          : `• E-mail: ${formData.email.trim()}`,
+      );
+    lines.push(
+      locale === "en"
+        ? `• Project Type: ${formData.projectType}`
+        : `• Tipo de Projeto: ${formData.projectType}`,
+    );
+    if (formData.budget)
+      lines.push(
+        locale === "en"
+          ? `• Estimated Budget: ${formData.budget}`
+          : `• Orçamento Estimado: ${formData.budget}`,
+      );
     if (formData.message.trim())
-      lines.push(`• Detalhes: ${formData.message.trim()}`);
+      lines.push(
+        locale === "en"
+          ? `• Details: ${formData.message.trim()}`
+          : `• Detalhes: ${formData.message.trim()}`,
+      );
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(
       lines.join("\n"),
@@ -154,14 +173,13 @@ export function Contact() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-mono text-emerald-400 mb-3">
-            VAMOS CONVERSAR
+            {dict.contact.badge}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            Pronto para transformar sua ideia em software real?
+            {dict.contact.title}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-zinc-400">
-            Preencha o formulário abaixo para receber uma análise técnica e
-            estimativa ou escolha um dos canais diretos para falar no mesmo dia.
+            {dict.contact.subtitle}
           </p>
         </div>
 
@@ -171,11 +189,10 @@ export function Contact() {
             <div className="rounded-2xl bg-zinc-900/60 border border-white/10 p-6 sm:p-8">
               <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-emerald-400" />
-                Canais de Atendimento Rápido
+                {dict.contact.quickChannels.title}
               </h3>
               <p className="text-xs text-zinc-400 mb-6 leading-relaxed">
-                Prefere uma conversa informal sem preencher formulário? Fique à
-                vontade para escolher a opção mais conveniente.
+                {dict.contact.quickChannels.description}
               </p>
 
               <div className="space-y-3">
@@ -188,7 +205,7 @@ export function Contact() {
                 >
                   <div className="flex items-center gap-2.5">
                     <MessageSquare className="w-4 h-4 text-emerald-400" />
-                    <span>Chamar no WhatsApp</span>
+                    <span>{dict.contact.quickChannels.whatsappBtn}</span>
                   </div>
                   <ArrowUpRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
@@ -210,7 +227,9 @@ export function Contact() {
                     </span>
                   </div>
                   <span className="text-[11px] font-mono text-zinc-400 shrink-0 ml-2">
-                    {copiedEmail ? "Copiado!" : "Copiar"}
+                    {copiedEmail
+                      ? dict.contact.quickChannels.copiedEmail
+                      : dict.contact.quickChannels.copyEmail}
                   </span>
                 </button>
 
@@ -223,7 +242,7 @@ export function Contact() {
                 >
                   <div className="flex items-center gap-2.5">
                     <Calendar className="w-4 h-4 text-teal-400" />
-                    <span>Agendar Call de 20 min</span>
+                    <span>{dict.contact.quickChannels.calendarBtn}</span>
                   </div>
                   <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
@@ -231,21 +250,21 @@ export function Contact() {
 
               <div className="mt-6 pt-6 border-t border-white/5 space-y-2">
                 <div className="flex items-center justify-between text-xs text-zinc-400">
-                  <span>Tempo de resposta:</span>
+                  <span>{dict.contact.quickChannels.responseTimeLabel}</span>
                   <span className="font-mono text-emerald-400 font-semibold">
-                    &lt; 2 horas
+                    {dict.contact.quickChannels.responseTimeValue}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-xs text-zinc-400">
-                  <span>Localização:</span>
+                  <span>{dict.contact.quickChannels.locationLabel}</span>
                   <span className="text-zinc-300">
-                    {siteConfig.contact.location}
+                    {dict.contact.quickChannels.locationValue}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-xs text-zinc-400">
-                  <span>Modelo de Contrato:</span>
+                  <span>{dict.contact.quickChannels.contractModelLabel}</span>
                   <span className="text-zinc-300">
-                    Escopo fechado ou Alocação
+                    {dict.contact.quickChannels.contractModelValue}
                   </span>
                 </div>
               </div>
@@ -256,7 +275,7 @@ export function Contact() {
           <div className="lg:col-span-7">
             <div className="rounded-2xl bg-zinc-900/60 border border-white/10 p-6 sm:p-8">
               <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Anti-spam Honeypot (invisível para humanos, armadilha para bots) */}
+                {/* Anti-spam Honeypot */}
                 <input
                   type="checkbox"
                   name="botcheck"
@@ -273,14 +292,14 @@ export function Contact() {
                       htmlFor="name"
                       className="block text-xs font-mono font-medium text-zinc-300 mb-1.5"
                     >
-                      SEU NOME / EMPRESA *
+                      {dict.contact.form.nameLabel}
                     </label>
                     <input
                       id="name"
                       name="name"
                       type="text"
                       required
-                      placeholder="Ex: João da Silva ou Empresa XYZ"
+                      placeholder={dict.contact.form.namePlaceholder}
                       value={formData.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
@@ -294,14 +313,14 @@ export function Contact() {
                       htmlFor="email"
                       className="block text-xs font-mono font-medium text-zinc-300 mb-1.5"
                     >
-                      SEU E-MAIL COMERCIAL *
+                      {dict.contact.form.emailLabel}
                     </label>
                     <input
                       id="email"
                       name="email"
                       type="email"
                       required
-                      placeholder="joao@empresa.com"
+                      placeholder={dict.contact.form.emailPlaceholder}
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -317,7 +336,7 @@ export function Contact() {
                     htmlFor="projectType"
                     className="block text-xs font-mono font-medium text-zinc-300 mb-1.5"
                   >
-                    TIPO DE PROJETO
+                    {dict.contact.form.projectTypeLabel}
                   </label>
                   <select
                     id="projectType"
@@ -346,7 +365,7 @@ export function Contact() {
                     htmlFor="budget"
                     className="block text-xs font-mono font-medium text-zinc-300 mb-1.5"
                   >
-                    ORÇAMENTO APROXIMADO
+                    {dict.contact.form.budgetLabel}
                   </label>
                   <select
                     id="budget"
@@ -375,14 +394,14 @@ export function Contact() {
                     htmlFor="message"
                     className="block text-xs font-mono font-medium text-zinc-300 mb-1.5"
                   >
-                    DETALHES DO PROJETO & PRAZOS DESEJADOS *
+                    {dict.contact.form.messageLabel}
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     required
                     rows={4}
-                    placeholder="Descreva brevemente o que você precisa construir, quais recursos são fundamentais e qual seu objetivo de prazo..."
+                    placeholder={dict.contact.form.messagePlaceholder}
                     value={formData.message}
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
@@ -444,11 +463,11 @@ export function Contact() {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           />
                         </svg>
-                        Despachando mensagem...
+                        {dict.contact.form.loadingBtn}
                       </span>
                     ) : (
                       <>
-                        <span>Enviar por E-mail</span>
+                        <span>{dict.contact.form.submitEmailBtn}</span>
                         <Send className="w-4 h-4" />
                       </>
                     )}
@@ -458,16 +477,15 @@ export function Contact() {
                     type="button"
                     onClick={handleSendFormViaWhatsApp}
                     className="py-3.5 px-5 rounded-xl bg-zinc-800/80 hover:bg-zinc-800 text-zinc-200 hover:text-white border border-white/10 text-xs sm:text-sm font-medium transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
-                    title="Enviar briefing preenchido direto para o WhatsApp"
+                    title={dict.contact.form.submitWhatsappTitle}
                   >
                     <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
-                    <span>Enviar via WhatsApp</span>
+                    <span>{dict.contact.form.submitWhatsappBtn}</span>
                   </button>
                 </div>
 
                 <p className="text-[11px] text-center text-zinc-400 font-mono">
-                  Envio seguro e direto para a caixa de entrada do fundador.
-                  Zero spam.
+                  {dict.contact.form.securityFootnote}
                 </p>
               </form>
             </div>
