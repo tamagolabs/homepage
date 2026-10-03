@@ -61,9 +61,7 @@ export function Contact() {
     setFeedbackMessage("");
 
     try {
-      const web3Key =
-        process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
-        "60b10f40-5e7c-432e-a836-137ce97f9252";
+      const web3Key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "";
 
       const payload = new FormData();
       payload.append("access_key", web3Key);
