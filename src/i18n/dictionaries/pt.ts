@@ -392,17 +392,17 @@ export const pt: Dictionary = {
       tagline:
         "Aplicativo mobile gamificado para musculação com IA generativa (Google Gemini)",
       description:
-        "Aplicativo mobile completo de alta performance arquitetado local-first em SQLite e React Native com Expo. Conta com geração inteligente de fichas de treino personalizadas via Google Gemini 3.7 Flash, motor algorítmico de sobrecarga progressiva (Smart Overload), gamificação completa com XP e badges, relatórios de evolução em PDF e compras in-app com RevenueCat.",
+        "Aplicativo mobile completo de alta performance arquitetado local-first em SQLite e React Native com Expo. Conta com geração inteligente de fichas de treino personalizadas via Google Gemini 3.8 Flash, motor algorítmico de sobrecarga progressiva (Smart Overload), gamificação completa com XP e badges, relatórios de evolução em PDF e compras in-app com RevenueCat.",
       iconUrl: "/images/gymup-icon.png",
       metrics: [
         { label: "Performance", value: "60 FPS Nativo" },
         { label: "Arquitetura", value: "Local-First (SQLite)" },
-        { label: "Inteligência", value: "Google Gemini 3.7" },
+        { label: "Inteligência", value: "Google Gemini 3.8" },
         { label: "Monetização", value: "RevenueCat IAP" },
       ],
       highlightsTitle: "Destaques de Engenharia & Recursos",
       highlights: [
-        "Geração e divisão inteligente de treinos personalizados com Google Gemini 3.7 Flash",
+        "Geração e divisão inteligente de treinos personalizados com Google Gemini 3.8 Flash",
         "Arquitetura 100% offline-first com persistência segura em Expo SQLite e cache em memória",
         "Sistema de Gamificação: Níveis evolutivos, streaks de disciplina e conquistas desbloqueáveis",
         "Smart Overload: Motor de progressão que analisa cargas passadas e sugere aumentos seguros",
@@ -421,7 +421,7 @@ export const pt: Dictionary = {
         "Firebase",
       ],
       playStoreUrl:
-        "https://play.google.com/store/apps/details?id=com.tamagolabs.gymup",
+        "https://play.google.com/store/apps/details?id=br.com.tamagolabs.gymup",
       playStoreLabel: "Ver na Google Play Store",
       customAppCta: "Quero um App Sob Medida",
       proprietarySoftware: "Software Proprietário",

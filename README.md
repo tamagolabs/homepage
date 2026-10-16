@@ -56,7 +56,7 @@ Em japonês, **Tamago (卵)** significa *ovo*. Para nós, representa a **incuba�
 A homepage dá destaque ao primeiro produto proprietário desenvolvido pela tamagolabs: o **GymUp**, um aplicativo mobile gamificado de musculação e gestão de treinos.
 
 - **Stack Mobile:** React Native 0.86, Expo 57, React 19, TypeScript.
-- **Inteligência Artificial:** Geração e periodização de treinos com **Google Gemini 3.7 Flash**.
+- **Inteligência Artificial:** Geração e periodização de treinos com **Google Gemini 3.8 Flash**.
 - **Arquitetura:** Local-First com persistência segura em **Expo SQLite** e performance fluida a **60 FPS**.
 - **Smart Overload:** Algoritmo de sobrecarga progressiva automática com análise histórica de cargas.
 - **Monetização:** In-App Purchases com **RevenueCat** integrado à **Google Play Store**.

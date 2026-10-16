@@ -194,7 +194,7 @@ export function Projects() {
         )}
 
         {/* Custom Projects & Experience Banner */}
-        <div className="mt-8 rounded-2xl bg-gradient-to-r from-zinc-900 via-zinc-900/80 to-zinc-950 border border-white/10 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-8 rounded-2xl bg-linear-to-r from-zinc-900 via-zinc-900/80 to-zinc-950 border border-white/10 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400">
               <Zap className="w-3.5 h-3.5" />
