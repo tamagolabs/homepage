@@ -73,3 +73,12 @@ body {
     transparent 70%
   );
 }
+
+.radial-glow-games {
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(244, 63, 94, 0.1) 0%,
+    rgba(139, 92, 246, 0.06) 35%,
+    transparent 70%
+  );
+}

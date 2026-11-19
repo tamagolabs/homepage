@@ -3,7 +3,11 @@
 import { ExternalLink, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { GithubIcon, LinkedinIcon } from "@/components/social-icons";
+import {
+  GithubIcon,
+  ItchIoIcon,
+  LinkedinIcon,
+} from "@/components/social-icons";
 import { siteConfig } from "@/data/site-config";
 import { useI18n } from "@/i18n/context";
 
@@ -93,6 +97,16 @@ export function Founder() {
               >
                 <LinkedinIcon className="w-3.5 h-3.5" />
                 {dict.founder.ctaLinkedin}
+              </a>
+
+              <a
+                href={siteConfig.itchIoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-rose-200 hover:text-white text-xs font-medium transition-colors border border-rose-500/20"
+              >
+                <ItchIoIcon className="w-3.5 h-3.5 text-rose-400" />
+                {dict.founder.ctaItch}
               </a>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { Faq } from "@/components/faq";
 import { Footer } from "@/components/footer";
 import { Founder } from "@/components/founder";
 import { Hero } from "@/components/hero";
+import { IndieGames } from "@/components/indie-games";
 import { Navbar } from "@/components/navbar";
 import { Projects } from "@/components/projects";
 import { Services } from "@/components/services";
@@ -17,6 +18,7 @@ export default function HomePage() {
         <Hero />
         <Services />
         <Projects />
+        <IndieGames />
         <SoloAdvantage />
         <TechStack />
         <Founder />

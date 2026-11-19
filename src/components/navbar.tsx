@@ -25,7 +25,7 @@ export function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 py-3 sm:py-4 px-3 sm:px-6 transition-all duration-300">
       <div
-        className={`max-w-5xl mx-auto rounded-full px-4 sm:px-5 py-2.5 flex items-center justify-between transition-all duration-300 ${
+        className={`max-w-6xl mx-auto rounded-full px-4 sm:px-5 py-2.5 flex items-center justify-between transition-all duration-300 ${
           isScrolled
             ? "bg-zinc-950/85 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50"
             : "bg-zinc-900/60 backdrop-blur-lg border border-white/10"
@@ -54,14 +54,14 @@ export function Navbar() {
 
         {/* Desktop Navigation Links */}
         <nav
-          className="hidden md:flex items-center gap-1 bg-zinc-950/40 p-1 rounded-full border border-white/5"
+          className="hidden lg:flex items-center gap-1 bg-zinc-950/40 p-1 rounded-full border border-white/5"
           aria-label={dict.nav.navigationAria}
         >
           {dict.nav.links.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="px-3 py-1.5 rounded-full text-xs font-medium text-zinc-400 hover:text-white hover:bg-white/8 transition-all duration-150"
+              className="whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-medium text-zinc-400 hover:text-white hover:bg-white/8 transition-all duration-150"
             >
               {item.name}
             </a>
@@ -76,7 +76,7 @@ export function Navbar() {
           </div>
 
           {/* Subtle Live Availability indicator */}
-          <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
+          <div className="hidden xl:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
@@ -87,7 +87,7 @@ export function Navbar() {
           {/* Sleek CTA Button */}
           <a
             href="#contato"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold tracking-tight transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-emerald-500/30 active:scale-95 group"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 text-xs font-semibold tracking-tight transition-all duration-200 shadow-sm shadow-emerald-500/20 hover:shadow-emerald-500/30 active:scale-95 group whitespace-nowrap"
           >
             <span>{dict.nav.startProject}</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -102,7 +102,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-colors"
+            className="lg:hidden p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-colors"
             aria-label={
               mobileMenuOpen ? dict.nav.menuCloseAria : dict.nav.menuOpenAria
             }
@@ -125,7 +125,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden max-w-5xl mx-auto mt-2 bg-zinc-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-4 shadow-2xl space-y-3"
+            className="lg:hidden max-w-6xl mx-auto mt-2 bg-zinc-950/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-4 shadow-2xl space-y-3"
           >
             <div className="flex items-center justify-between pb-2 border-b border-white/5">
               <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-400">

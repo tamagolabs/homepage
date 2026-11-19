@@ -3,7 +3,11 @@
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { GithubIcon, LinkedinIcon } from "@/components/social-icons";
+import {
+  GithubIcon,
+  ItchIoIcon,
+  LinkedinIcon,
+} from "@/components/social-icons";
 import { siteConfig } from "@/data/site-config";
 import { useI18n } from "@/i18n/context";
 
@@ -60,6 +64,14 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href="#contato"
+                  className="hover:text-white transition-colors"
+                >
+                  {dict.footer.contact}
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -100,6 +112,18 @@ export function Footer() {
                 >
                   <LinkedinIcon className="w-3.5 h-3.5" />
                   {dict.footer.linkedin}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteConfig.itchIoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1.5 text-rose-300"
+                >
+                  <ItchIoIcon className="w-3.5 h-3.5 text-rose-400" />
+                  {dict.footer.itchIo}
+                  <ExternalLink className="w-3 h-3 text-rose-400/80" />
                 </a>
               </li>
             </ul>

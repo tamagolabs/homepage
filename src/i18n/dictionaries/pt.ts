@@ -1,3 +1,51 @@
+export interface SoftwareProjectItem {
+  id: string;
+  title: string;
+  badge: string;
+  categoryLabel: string;
+  tagline: string;
+  description: string;
+  iconUrl?: string;
+  metrics: { label: string; value: string }[];
+  highlightsTitle: string;
+  highlights: string[];
+  technologies: string[];
+  playStoreUrl?: string;
+  playStoreLabel?: string;
+  appStoreUrl?: string;
+  appStoreLabel?: string;
+  liveUrl?: string;
+  liveLabel?: string;
+  customAppCta: string;
+  proprietarySoftware: string;
+  architectureLabel: string;
+  statusLabel: string;
+  featured?: boolean;
+}
+
+export interface IndieGameItem {
+  id: string;
+  title: string;
+  subtitleJp?: string;
+  badge: string;
+  genre: string;
+  tagline: string;
+  description: string;
+  coverUrl: string;
+  coverAlt: string;
+  platforms: string[];
+  metrics: { label: string; value: string }[];
+  highlightsTitle: string;
+  highlights: string[];
+  tags: string[];
+  itchUrl: string;
+  primaryCtaLabel: string;
+  secondaryCtaLabel: string;
+  studioLabel: string;
+  availabilityLabel: string;
+  featured?: boolean;
+}
+
 export interface Dictionary {
   meta: {
     titleDefault: string;
@@ -30,6 +78,7 @@ export interface Dictionary {
       api: string;
       mobile: string;
       landing: string;
+      conjunction: string;
       saas: string;
       p2: string;
     };
@@ -61,31 +110,30 @@ export interface Dictionary {
     title: string;
     subtitle: string;
     founderPortfolioLink: string;
-    flagship: {
-      id: string;
-      title: string;
-      badge: string;
-      categoryLabel: string;
-      tagline: string;
-      description: string;
-      iconUrl: string;
-      metrics: { label: string; value: string }[];
-      highlightsTitle: string;
-      highlights: string[];
-      technologies: string[];
-      playStoreUrl?: string;
-      playStoreLabel: string;
-      customAppCta: string;
-      proprietarySoftware: string;
-      architectureLabel: string;
-      offlineReadyLabel: string;
-    };
+    gamesShortcutLabel: string;
+    gamesShortcutCta: string;
+    items: SoftwareProjectItem[];
     customBanner: {
       badge: string;
       title: string;
       description: string;
       quoteBtn: string;
       portfolioBtn: string;
+    };
+  };
+  games: {
+    badge: string;
+    divisionNote: string;
+    title: string;
+    subtitle: string;
+    itchProfileLink: string;
+    platformsLabel: string;
+    items: IndieGameItem[];
+    labBanner: {
+      badge: string;
+      title: string;
+      description: string;
+      ctaLabel: string;
     };
   };
   soloAdvantage: {
@@ -120,6 +168,7 @@ export interface Dictionary {
     ctaPortfolio: string;
     ctaGithub: string;
     ctaLinkedin: string;
+    ctaItch: string;
     brandCard: {
       badge: string;
       title: string;
@@ -191,6 +240,8 @@ export interface Dictionary {
     portfolio: string;
     github: string;
     linkedin: string;
+    itchIo: string;
+    contact: string;
     rightsReserved: string;
     builtWith: string;
   };
@@ -216,9 +267,11 @@ export const pt: Dictionary = {
       "desenvolvimento saas",
       "landing pages de alta conversão",
       "programador sênior",
-      "next.js 15",
+      "next.js 16",
       "bun runtime",
       "tamagolabs",
+      "indie games",
+      "tamagolabs games",
     ],
     ogTitle: "tamagolabs | Desenvolvimento de Software de Alta Performance",
     ogDescription:
@@ -237,11 +290,11 @@ export const pt: Dictionary = {
     startProjectMobile: "Iniciar Projeto com Engenheiro",
     links: [
       { name: "Especialidades", href: "#servicos" },
-      { name: "Projetos & Apps", href: "#projetos" },
+      { name: "Software & SaaS", href: "#projetos" },
+      { name: "Indie Games", href: "#games" },
       { name: "Diferencial", href: "#diferencial" },
       { name: "Stack", href: "#stack" },
       { name: "Engenheiro", href: "#fundador" },
-      { name: "Contato", href: "#contato" },
     ],
   },
   hero: {
@@ -254,11 +307,12 @@ export const pt: Dictionary = {
       api: "APIs escaláveis",
       mobile: "apps mobile com React Native",
       landing: "landing pages nota 100 em Web Vitals",
+      conjunction: "e",
       saas: "produtos SaaS completos",
       p2: "Você fala e negocia diretamente com quem constrói o código.",
     },
     ctaPrimary: "Falar sobre um projeto",
-    ctaSecondary: "Explorar Projetos & Apps",
+    ctaSecondary: "Explorar Software & SaaS",
     ctaPortfolio: "Portfólio Pessoal",
     pillars: [
       {
@@ -379,55 +433,60 @@ export const pt: Dictionary = {
     ],
   },
   projects: {
-    badge: "PRODUTOS & CASES DE SUCESSO",
-    title: "Software real em produção",
+    badge: "ENGENHARIA B2B, APPS & SAAS",
+    title: "Software profissional em produção",
     subtitle:
-      "Conheça as soluções desenvolvidas pela tamagolabs. Foco em código limpo, arquiteturas locais de altíssima performance e inteligência artificial aplicada.",
+      "Produtos comerciais, apps mobile e arquiteturas SaaS construídos pela tamagolabs — foco em código limpo, performance local-first e IA aplicada.",
     founderPortfolioLink: "Portfólio Pessoal do Engenheiro",
-    flagship: {
-      id: "gymup",
-      title: "GymUp",
-      badge: "PRODUTO OFICIAL • EM PRODUÇÃO",
-      categoryLabel: "App Mobile • React Native & IA",
-      tagline:
-        "Aplicativo mobile gamificado para musculação com IA generativa (Google Gemini)",
-      description:
-        "Aplicativo mobile completo de alta performance arquitetado local-first em SQLite e React Native com Expo. Conta com geração inteligente de fichas de treino personalizadas via Google Gemini 3.8 Flash, motor algorítmico de sobrecarga progressiva (Smart Overload), gamificação completa com XP e badges, relatórios de evolução em PDF e compras in-app com RevenueCat.",
-      iconUrl: "/images/gymup-icon.png",
-      metrics: [
-        { label: "Performance", value: "60 FPS Nativo" },
-        { label: "Arquitetura", value: "Local-First (SQLite)" },
-        { label: "Inteligência", value: "Google Gemini 3.8" },
-        { label: "Monetização", value: "RevenueCat IAP" },
-      ],
-      highlightsTitle: "Destaques de Engenharia & Recursos",
-      highlights: [
-        "Geração e divisão inteligente de treinos personalizados com Google Gemini 3.8 Flash",
-        "Arquitetura 100% offline-first com persistência segura em Expo SQLite e cache em memória",
-        "Sistema de Gamificação: Níveis evolutivos, streaks de disciplina e conquistas desbloqueáveis",
-        "Smart Overload: Motor de progressão que analisa cargas passadas e sugere aumentos seguros",
-        "Relatórios em PDF: Compilação visual de métricas para nutricionistas e treinadores",
-        "Monetização Freemium: Assinaturas in-app com RevenueCat para Google Play e App Store",
-      ],
-      technologies: [
-        "React Native",
-        "Expo 57",
-        "React 19",
-        "TypeScript",
-        "Google Gemini AI",
-        "Expo SQLite",
-        "RevenueCat",
-        "Biome",
-        "Firebase",
-      ],
-      playStoreUrl:
-        "https://play.google.com/store/apps/details?id=br.com.tamagolabs.gymup",
-      playStoreLabel: "Ver na Google Play Store",
-      customAppCta: "Quero um App Sob Medida",
-      proprietarySoftware: "Software Proprietário",
-      architectureLabel: "Arquitetura: Local-First",
-      offlineReadyLabel: "100% Offline Ready",
-    },
+    gamesShortcutLabel: "Procurando nossos jogos autorais?",
+    gamesShortcutCta: "Ver Indie Games",
+    items: [
+      {
+        id: "gymup",
+        title: "GymUp",
+        badge: "PRODUTO OFICIAL • EM PRODUÇÃO",
+        categoryLabel: "App Mobile • React Native & IA",
+        tagline:
+          "Aplicativo mobile gamificado para musculação com IA generativa (Google Gemini)",
+        description:
+          "Aplicativo mobile completo de alta performance arquitetado local-first em SQLite e React Native com Expo. Conta com geração inteligente de fichas de treino personalizadas via Google Gemini 3.8 Flash, motor algorítmico de sobrecarga progressiva (Smart Overload), gamificação completa com XP e badges, relatórios de evolução em PDF e compras in-app com RevenueCat.",
+        iconUrl: "/images/gymup-icon.png",
+        metrics: [
+          { label: "Performance", value: "60 FPS Nativo" },
+          { label: "Arquitetura", value: "Local-First (SQLite)" },
+          { label: "Inteligência", value: "Google Gemini 3.8" },
+          { label: "Monetização", value: "RevenueCat IAP" },
+        ],
+        highlightsTitle: "Destaques de Engenharia & Recursos",
+        highlights: [
+          "Geração e divisão inteligente de treinos personalizados com Google Gemini 3.8 Flash",
+          "Arquitetura 100% offline-first com persistência segura em Expo SQLite e cache em memória",
+          "Sistema de Gamificação: Níveis evolutivos, streaks de disciplina e conquistas desbloqueáveis",
+          "Smart Overload: Motor de progressão que analisa cargas passadas e sugere aumentos seguros",
+          "Relatórios em PDF: Compilação visual de métricas para nutricionistas e treinadores",
+          "Monetização Freemium: Assinaturas in-app com RevenueCat para Google Play e App Store",
+        ],
+        technologies: [
+          "React Native",
+          "Expo 57",
+          "React 19",
+          "TypeScript",
+          "Google Gemini AI",
+          "Expo SQLite",
+          "RevenueCat",
+          "Biome",
+          "Firebase",
+        ],
+        playStoreUrl:
+          "https://play.google.com/store/apps/details?id=br.com.tamagolabs.gymup",
+        playStoreLabel: "Ver na Google Play Store",
+        customAppCta: "Quero um App Sob Medida",
+        proprietarySoftware: "Software Proprietário",
+        architectureLabel: "Arquitetura: Local-First",
+        statusLabel: "100% Offline Ready",
+        featured: true,
+      },
+    ],
     customBanner: {
       badge: "DESENVOLVIMENTO SOB MEDIDA PARA A SUA EMPRESA",
       title: "Precisa de um App Mobile, SaaS, API ou Landing Page?",
@@ -435,6 +494,69 @@ export const pt: Dictionary = {
         "O GymUp é a demonstração prática do padrão de código e acabamento da tamagolabs. Para conhecer todo o histórico de sistemas e empresas atendidas pelo Bruno Fukumori ao longo de mais de 10 anos, acesse o portfólio individual.",
       quoteBtn: "Solicitar Orçamento",
       portfolioBtn: "Ver Portfólio do Dev",
+    },
+  },
+  games: {
+    badge: "TAMAGO LABS GAMES • PROJETOS AUTORAIS",
+    divisionNote:
+      "Frente criativa independente • Separada dos serviços B2B & SaaS",
+    title: "Indie games criados no estúdio",
+    subtitle:
+      "Além de software corporativo e SaaS, também incubamos jogos independentes autorais — unindo narrativa, direção de arte retrô e engenharia cuidadosa.",
+    itchProfileLink: "Estúdio no itch.io",
+    platformsLabel: "Disponível em",
+    items: [
+      {
+        id: "heartbeat-chronicles",
+        title: "Heartbeat Chronicles",
+        subtitleJp: "ハートビート・クロニクル",
+        badge: "LANÇADO • DEMO WEB GRATUITA",
+        genre: "Visual Novel • Dating Sim Anos 90",
+        tagline:
+          "Dating sim inspirado nos clássicos japoneses dos anos 90 com três rotas românticas e gestão de rotina escolar.",
+        description:
+          "Você assume o papel de um estudante transferido ao longo de um ano letivo completo: equilibre estudos, trabalhos de meio período e atributos pessoais enquanto constrói laços com três heroínas distintas — Ayame, Hina e Luna — em uma estética anime 2D nostálgica.",
+        coverUrl: "/images/games/heartbeat-chronicles-cover.jpg",
+        coverAlt:
+          "Arte de capa de Heartbeat Chronicles mostrando as três heroínas Ayame, Hina e Luna em uma ladeira arborizada com cerejeiras ao pôr do sol",
+        platforms: ["Demo Web (Navegador)", "Windows", "Linux"],
+        metrics: [
+          { label: "Gênero", value: "Dating Sim / VN" },
+          { label: "Rotas", value: "3 Heroínas" },
+          { label: "Demo", value: "Grátis no Browser" },
+          { label: "Versão Full", value: "Windows & Linux" },
+        ],
+        highlightsTitle: "Sobre o Jogo & Experiência",
+        highlights: [
+          "Homenagem autêntica à era de ouro dos dating sims japoneses dos anos 1990",
+          "Três rotas principais de romance com personalidades distintas: Ayame, Hina e Luna",
+          "Simulação de ano letivo completo: gerencie estudos, empregos de meio período e evolução de stats",
+          "Visual anime 2D e narrativa rica com decisões que moldam os desfechos da história",
+          "Demo gratuita jogável diretamente no navegador, sem necessidade de download",
+          "Versão completa disponível para download no itch.io para Windows e Linux",
+        ],
+        tags: [
+          "Visual Novel",
+          "Dating Sim",
+          "90s Retro",
+          "2D Anime",
+          "Singleplayer",
+          "Demo Web",
+        ],
+        itchUrl: "https://tamagolabs.itch.io/heartbeat-chronicles",
+        primaryCtaLabel: "Jogar Demo / Ver no itch.io",
+        secondaryCtaLabel: "Ver página do estúdio",
+        studioLabel: "Projeto Autoral • Tamago Labs Games",
+        availabilityLabel: "Demo Web Gratuita",
+        featured: true,
+      },
+    ],
+    labBanner: {
+      badge: "LABORATÓRIO CRIATIVO • PRÓXIMOS TÍTULOS",
+      title: "Mais jogos autorais em incubação",
+      description:
+        "Novos protótipos narrativos e experiências indie estão sendo incubados paralelamente aos nossos produtos de software. Acompanhe o perfil da Tamago Labs no itch.io para devlogs, demos e próximos lançamentos.",
+      ctaLabel: "Seguir no itch.io",
     },
   },
   soloAdvantage: {
@@ -503,6 +625,7 @@ export const pt: Dictionary = {
     ctaPortfolio: "Portfólio Pessoal Completo",
     ctaGithub: "GitHub",
     ctaLinkedin: "LinkedIn",
+    ctaItch: "itch.io",
     brandCard: {
       badge: "O CONCEITO DA MARCA",
       title: 'Por que "tamagolabs"?',
@@ -511,7 +634,7 @@ export const pt: Dictionary = {
       description2: "significa ovo. Para nós, representa o processo de",
       incubationHighlight: "incubação de produtos digitais",
       description3:
-        ": acolhemos sua ideia ainda embrionária, estruturamos cada linha de arquitetura com precisão e cuidado até ela quebrar a casca e eclodir no mercado como um software robusto, escalável e de alta conversão.",
+        ": acolhemos cada ideia ainda embrionária, estruturamos sua arquitetura e identidade com precisão e cuidado até ela quebrar a casca e eclodir no mercado — seja como um software B2B/SaaS robusto e escalável ou como um indie game autoral.",
       pills: ["Ideação & Incubação", "Engenharia Sólida", "Eclosão & Escala"],
       altMascot: "Mascote tamagolabs - Gatinho no ovo de tecnologia",
     },
@@ -620,6 +743,8 @@ export const pt: Dictionary = {
     portfolio: "Portfólio Pessoal",
     github: "GitHub Oficial",
     linkedin: "LinkedIn",
+    itchIo: "itch.io (Games)",
+    contact: "Contato",
     rightsReserved: "Todos os direitos reservados.",
     builtWith: "Construído com Next.js, Bun, Tailwind CSS & Motion",
   },

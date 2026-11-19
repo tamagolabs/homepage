@@ -30,7 +30,11 @@ export function JsonLd({ locale, dict }: JsonLdProps) {
             siteConfig.founder.twitterUrl,
           ].filter(Boolean),
         },
-        sameAs: [siteConfig.founder.githubUrl, siteConfig.founder.linkedinUrl],
+        sameAs: [
+          siteConfig.founder.githubUrl,
+          siteConfig.founder.linkedinUrl,
+          siteConfig.itchIoUrl,
+        ],
         contactPoint: {
           "@type": "ContactPoint",
           email: siteConfig.contact.email,
@@ -60,6 +64,22 @@ export function JsonLd({ locale, dict }: JsonLdProps) {
         },
         areaServed: "Global",
       },
+      ...dict.games.items.map((game) => ({
+        "@type": "VideoGame",
+        "@id": `${siteConfig.url}/${locale}#game-${game.id}`,
+        name: game.title,
+        description: game.description,
+        genre: game.genre,
+        gamePlatform: ["Web Browser", "Windows", "Linux"],
+        url: game.itchUrl,
+        image: `${siteConfig.url}${game.coverUrl}`,
+        author: {
+          "@id": `${siteConfig.url}/${locale}#organization`,
+        },
+        publisher: {
+          "@id": `${siteConfig.url}/${locale}#organization`,
+        },
+      })),
     ],
   };
 

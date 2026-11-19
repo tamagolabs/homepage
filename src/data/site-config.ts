@@ -5,6 +5,7 @@ export interface SiteConfig {
   description: string;
   url: string;
   ogImage: string;
+  itchIoUrl: string;
   founder: {
     name: string;
     role: string;
@@ -24,7 +25,6 @@ export interface SiteConfig {
     location: string;
     availability: "available" | "limited" | "booked";
   };
-  navigation: Array<{ name: string; href: string }>;
 }
 
 export const siteConfig: SiteConfig = {
@@ -35,6 +35,7 @@ export const siteConfig: SiteConfig = {
     "Estúdio de desenvolvimento de software focado em APIs de alta escalabilidade, apps mobile com React Native, landing pages ultra-rápidas e SaaS completos. Liderado pelo engenheiro de software Bruno Fukumori.",
   url: "https://tamagolabs.com.br",
   ogImage: "https://tamagolabs.com.br/opengraph-image",
+  itchIoUrl: "https://tamagolabs.itch.io",
   founder: {
     name: "Bruno Fukumori",
     role: "Engenheiro de Software Full Stack Sênior & Fundador",
@@ -54,12 +55,4 @@ export const siteConfig: SiteConfig = {
     location: "São Paulo, Brasil • Atendimento Global",
     availability: "available",
   },
-  navigation: [
-    { name: "Especialidades", href: "#servicos" },
-    { name: "Projetos & Apps", href: "#projetos" },
-    { name: "Diferencial", href: "#diferencial" },
-    { name: "Stack", href: "#stack" },
-    { name: "Engenheiro", href: "#fundador" },
-    { name: "Contato", href: "#contato" },
-  ],
 };

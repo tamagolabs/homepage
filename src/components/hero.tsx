@@ -110,7 +110,7 @@ export function Hero() {
           <strong className="text-zinc-200">
             {dict.hero.description.landing}
           </strong>{" "}
-          e{" "}
+          {dict.hero.description.conjunction}{" "}
           <strong className="text-zinc-200">
             {dict.hero.description.saas}
           </strong>

@@ -47,3 +47,16 @@ export function GooglePlayIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function ItchIoIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <title>itch.io</title>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M3.2 3h17.6L22 6.5V8a2 2 0 0 1-4 0 2 2 0 0 1-4 0 2 2 0 0 1-4 0 2 2 0 0 1-4 0 2 2 0 0 1-4 0V6.5L3.2 3zm.3 8.5h17V18a3 3 0 0 1-3 3h-11a3 3 0 0 1-3-3v-6.5zm4.25 3h1.5v1h1V17h-1v1h-1.5v-1h-1v-1.5h1v-1zm7.4 2.4a.95.95 0 1 1-1.9 0 .95.95 0 0 1 1.9 0zm2.5-1.5a.95.95 0 1 1-1.9 0 .95.95 0 0 1 1.9 0z"
+      />
+    </svg>
+  );
+}
