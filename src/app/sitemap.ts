@@ -3,7 +3,7 @@ import { siteConfig } from "@/data/site-config";
 import { locales } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url;
+  const baseUrl = siteConfig.url;
   const currentDate = new Date();
 
   return locales.map((locale) => ({
@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       languages: {
         pt: `${baseUrl}/pt`,
         en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/pt`,
       },
     },
   }));

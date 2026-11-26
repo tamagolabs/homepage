@@ -27,14 +27,18 @@ export interface SiteConfig {
   };
 }
 
+const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.tamagolabs.com.br"
+).replace(/\/+$/, "");
+
 export const siteConfig: SiteConfig = {
   name: "tamagolabs",
   legalName: "Tamago Labs Software Studio",
   tagline: "Software de alta performance para quem não pode perder tempo",
   description:
     "Estúdio de desenvolvimento de software focado em APIs de alta escalabilidade, apps mobile com React Native, landing pages ultra-rápidas e SaaS completos. Liderado pelo engenheiro de software Bruno Fukumori.",
-  url: "https://tamagolabs.com.br",
-  ogImage: "https://tamagolabs.com.br/opengraph-image",
+  url: siteUrl,
+  ogImage: `${siteUrl}/pt/opengraph-image`,
   itchIoUrl: "https://tamagolabs.itch.io",
   founder: {
     name: "Bruno Fukumori",

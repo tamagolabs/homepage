@@ -125,7 +125,7 @@ export default async function Image({
             ? "Desenvolvedor Full Stack Solo Sênior"
             : "Senior Solo Full Stack Developer"}
         </div>
-        <div style={{ color: "#34d399", fontWeight: 700 }}>tamagolabs.com</div>
+        <div style={{ color: "#34d399", fontWeight: 700 }}>tamagolabs.com.br</div>
       </div>
     </div>,
     {
